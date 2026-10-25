@@ -1,0 +1,42 @@
+{
+  "caseId": "printing-observation-demo",
+  "title": "Printed page did not appear",
+  "summary": "Observe the existing printer display and queue. Do not change settings or retry printing.",
+  "runbookVersion": "printing-v1",
+  "entry": "display",
+  "nodes": [
+    {
+      "id": "display",
+      "kind": "observation",
+      "prompt": "Is the printer display currently lit?",
+      "options": [
+        { "value": "lit", "label": "Display is lit", "next": "queue" },
+        { "value": "dark", "label": "Display is dark", "next": "power-support" }
+      ]
+    },
+    {
+      "id": "queue",
+      "kind": "observation",
+      "prompt": "Does the existing print queue show the expected document?",
+      "options": [
+        { "value": "present", "label": "Document is listed", "next": "queue-support" },
+        { "value": "absent", "label": "Document is absent", "next": "application-support" }
+      ]
+    },
+    {
+      "id": "power-support",
+      "kind": "recommendation",
+      "text": "Share the recorded dark-display observation with local equipment support. This guide does not establish the cause or authorize a repair."
+    },
+    {
+      "id": "queue-support",
+      "kind": "recommendation",
+      "text": "Share the recorded lit display and listed document with print-queue support. This guide does not establish the cause or authorize a retry."
+    },
+    {
+      "id": "application-support",
+      "kind": "recommendation",
+      "text": "Share the recorded lit display and absent document with application support. This guide does not establish whether a print request was sent."
+    }
+  ]
+}
